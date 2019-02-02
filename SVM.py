@@ -80,10 +80,10 @@ class SVM:
         x = np.arange(num_acc)*30
         sub1.set_xlabel("steps")
         sub1.set_ylabel("accuracy")
-        sub1.plot(x, self.acc)
+        sub1.plot(x, self.acc, label=reg)
+        sub1.legend()
         fig.savefig('1myimage'+reg+'.jpg', format='jpg', dpi=120)
-        
-        fig.clear()
+        #fig.clear()
         
         fig = plt.figure(2)
         sub2 = fig.add_subplot(111)
@@ -91,10 +91,10 @@ class SVM:
         x = np.arange(num_w)*30
         sub2.set_xlabel("steps")
         sub2.set_ylabel("magnitude of coefficient vector")
-        sub2.plot(x, self.w_magnitude)
+        sub2.plot(x, self.w_magnitude, label=reg)
+        sub2.legend()
         fig.savefig('2myimage'+reg+'.jpg', format='jpg', dpi=120)
-        
-        fig.clear()
+        #fig.clear()
 
 
             
