@@ -21,10 +21,12 @@ train_size  = math.ceil(data.shape[0]*0.9)
 train       = data[:train_size,:]
 validation  = data[train_size:,:]
 
+
 classifier = SVM(dims=6, reg=0.0001)
 classifier.train(data=train, seasons=50, val=validation)
 classifier.plot_all(reg="0.0001")
 
+'''
 classifier = SVM(dims=6, reg=0.001)
 classifier.train(data=train, seasons=50, val=validation)
 classifier.plot_all(reg="0.001")
@@ -40,3 +42,20 @@ classifier.plot_all(reg="0.1")
 classifier = SVM(dims=6, reg=1)
 classifier.train(data=train, seasons=50, val=validation)
 classifier.plot_all(reg="1")
+'''
+
+TestData = genfromtxt('test.txt',delimiter=',',dtype=str)
+X = TestData[:,CONTINOUS]
+X = X.astype(float)
+X = X - np.mean(X, axis=0)
+X /= np.std(X, axis=0)
+predict_y = classifier.predict(X)
+print(predict_y)
+
+file = open("submission.txt", "w")
+for i in predict_y:
+    if i==-1:
+        file.write("<=50K\n")
+    else:
+        file.write(">50K\n")
+file.close()
