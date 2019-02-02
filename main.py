@@ -25,20 +25,18 @@ classifier = SVM(dims=6, reg=0.0001)
 classifier.train(data=train, seasons=50, val=validation)
 classifier.plot_all(reg="0.0001")
 
-'''
-classifier = SVM(dims=6, reg=0.001, lr=0.001)
+classifier = SVM(dims=6, reg=0.001)
 classifier.train(data=train, seasons=50, val=validation)
 classifier.plot_all(reg="0.001")
 
-classifier = SVM(dims=6, reg=0.01, lr=0.001)
+classifier = SVM(dims=6, reg=0.01)
 classifier.train(data=train, seasons=50, val=validation)
 classifier.plot_all(reg="0.01")
 
-classifier = SVM(dims=6, reg=0.1, lr=0.001)
+classifier = SVM(dims=6, reg=0.1)
 classifier.train(data=train, seasons=50, val=validation)
 classifier.plot_all(reg="0.1")
 
-classifier = SVM(dims=6, reg=1, lr=0.001)
+classifier = SVM(dims=6, reg=1)
 classifier.train(data=train, seasons=50, val=validation)
 classifier.plot_all(reg="1")
-'''
