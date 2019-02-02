@@ -3,10 +3,9 @@ import math
 import matplotlib.pyplot as plt
 
 class SVM:
-    def __init__(self, dims, reg, lr):
+    def __init__(self, dims, reg):
         self.dims   = dims
         self.reg    = reg
-        self.lr     = lr
         self.acc    = []
         self.w_magnitude = []
 
@@ -30,6 +29,7 @@ class SVM:
             train    = data[hold_out_size:,:]
             val_X, val_y = self.split(val)
             X, y         = self.split(train)
+            self.lr = 1.0/(0.01*season+50)
             for step in range(300):
                 index = np.random.randint(num_data-50)
                 x0 = X[index]

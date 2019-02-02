@@ -21,7 +21,7 @@ train_size  = math.ceil(data.shape[0]*0.9)
 train       = data[:train_size,:]
 validation  = data[train_size:,:]
 
-classifier = SVM(dims=6, reg=0.0001, lr=0.001)
+classifier = SVM(dims=6, reg=0.0001)
 classifier.train(data=train, seasons=50, val=validation)
 classifier.plot_all(reg="0.0001")
 
