@@ -21,9 +21,9 @@ class SVM:
     def forward(self, X):
         return X.dot(self.W) + self.b
 
-    def train(self, data, epochs, val):
+    def train(self, data, seasons, val):
         num_data = data.shape[0]
-        for epoch in range(epochs):
+        for season in range(seasons):
             np.random.shuffle(data)
             hold_out_size = 50
             hold_out = data[:hold_out_size,:]
@@ -45,7 +45,8 @@ class SVM:
                 if step % 30 == 0:
                     predict_y = self.predict(val_X)
                     acc = np.sum(predict_y == val_y)/val_y.shape[0]
-                    print("epoch: " + str(epoch) + " step: " + str(step) + " acc: " + str(acc) )
+                    print("seasons: " + str(season) + " step: " + str(step) + " acc: " + str(acc) )
+                    #print(predict_y)
                     self.acc.append(acc)
                     self.w_magnitude.append(np.linalg.norm(self.W))
 
@@ -69,6 +70,30 @@ class SVM:
         plt.xlabel("steps")
         plt.ylabel("magnitude of coefficient vector")
         plt.plot(x, self.w_magnitude)
+        
+    def plot_all(self, reg):
+        
+        fig = plt.figure(1)
+        sub1 = fig.add_subplot(111)
+        num_acc = len(self.acc)
+        x = np.arange(num_acc)*30
+        sub1.set_xlabel("steps")
+        sub1.set_ylabel("accuracy")
+        sub1.plot(x, self.acc)
+        fig.savefig('1myimage'+reg+'.jpg', format='jpg', dpi=120)
+        
+        fig.clear()
+        
+        fig = plt.figure(2)
+        sub2 = fig.add_subplot(111)
+        num_w = len(self.w_magnitude)
+        x = np.arange(num_w)*30
+        sub2.set_xlabel("steps")
+        sub2.set_ylabel("magnitude of coefficient vector")
+        sub2.plot(x, self.w_magnitude)
+        fig.savefig('2myimage'+reg+'.jpg', format='jpg', dpi=120)
+        
+        fig.clear()
 
 
             
