@@ -45,7 +45,6 @@ class SVM:
                 if step % 30 == 0:
                     predict_y = self.predict(val_X)
                     acc = np.sum(predict_y == val_y)/val_y.shape[0]
-                    #print("seasons: " + str(season) + " step: " + str(step) + " acc: " + str(acc) )
                     self.acc.append(acc)
                     self.w_magnitude.append(np.linalg.norm(self.W))
         acc = np.sum(predict_y == val_y)/val_y.shape[0]
