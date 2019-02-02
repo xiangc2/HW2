@@ -20,15 +20,15 @@ class SVM:
     def forward(self, X):
         return X.dot(self.W) + self.b
 
-    def train(self, data, seasons, val):
+    def train(self, data, seasons):
         num_data = data.shape[0]
         for season in range(seasons):
             np.random.shuffle(data)
             hold_out_size = 50
             hold_out = data[:hold_out_size,:]
             train    = data[hold_out_size:,:]
-            val_X, val_y = self.split(val)
-            X, y         = self.split(train)
+            ho_X, ho_y = self.split(hold_out)
+            X, y       = self.split(train)
             self.lr = 1.0/(0.01*season+50)
             for step in range(300):
                 index = np.random.randint(num_data-50)
@@ -43,12 +43,12 @@ class SVM:
                 self.W -= self.lr*dW
                 self.b -= self.lr*db
                 if step % 30 == 0:
-                    predict_y = self.predict(val_X)
-                    acc = np.sum(predict_y == val_y)/val_y.shape[0]
+                    predict_y = self.predict(ho_X)
+                    acc = np.sum(predict_y == ho_y)/ho_y.shape[0]
                     self.acc.append(acc)
                     self.w_magnitude.append(np.linalg.norm(self.W))
-        acc = np.sum(predict_y == val_y)/val_y.shape[0]
-        print("Reg: "+str(self.reg)+" Acc: "+str(acc))
+        acc = np.sum(predict_y == ho_y)/ho_y.shape[0]
+        #print("Reg: "+str(self.reg)+" Acc: "+str(acc))
 
     def predict(self, X):
         num_data = X.shape[0]
@@ -56,6 +56,12 @@ class SVM:
         predict_y = np.ones(num_data)
         predict_y[f < 0] = -1.0
         return predict_y
+
+    def evaluate(self, data):
+        X, y = self.split(data)
+        predict_y = self.predict(X)
+        acc = np.sum(predict_y == y)/y.shape[0]
+        print("reg: " + str(self.reg) + ", acc: " + str(acc))
 
     def plot_acc(self):
         num_acc = len(self.acc)

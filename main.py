@@ -22,16 +22,19 @@ train       = data[:train_size,:]
 validation  = data[train_size:,:]
 
 classifier = SVM(dims=6, reg=0.0001)
-classifier.train(data=train, seasons=50, val=validation)
+classifier.train(data=train, seasons=50)
 classifier.plot_all(reg="0.0001")
+classifier.evaluate(validation)
 
 classifier = SVM(dims=6, reg=0.001)
-classifier.train(data=train, seasons=50, val=validation)
+classifier.train(data=train, seasons=50)
 classifier.plot_all(reg="0.001")
+classifier.evaluate(validation)
 
 classifier = SVM(dims=6, reg=0.01)
-classifier.train(data=train, seasons=50, val=validation)
-classifier.plot_all(reg="0.01")
+classifier.train(data=train, seasons=50)
+classifier.plot_all(reg="0.1")
+classifier.evaluate(validation)
 
 TestData = genfromtxt('test.txt',delimiter=',',dtype=str)
 X = TestData[:,CONTINOUS]
@@ -39,7 +42,6 @@ X = X.astype(float)
 X = X - np.mean(X, axis=0)
 X /= np.std(X, axis=0)
 predict_y = classifier.predict(X)
-print(predict_y)
 
 file = open("submission.txt", "w")
 for i in predict_y:
@@ -50,10 +52,12 @@ for i in predict_y:
 file.close()
 
 classifier = SVM(dims=6, reg=0.1)
-classifier.train(data=train, seasons=50, val=validation)
-classifier.plot_all(reg="0.1")
+classifier.train(data=train, seasons=50)
+classifier.plot_all(reg="1")
+classifier.evaluate(validation)
 
 classifier = SVM(dims=6, reg=1)
-classifier.train(data=train, seasons=50, val=validation)
-classifier.plot_all(reg="1")
+classifier.train(data=train, seasons=50)
+classifier.plot_all(reg="0.01")
+classifier.evaluate(validation)
 
